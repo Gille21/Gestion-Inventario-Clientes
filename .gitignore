@@ -1,5 +1,22 @@
-node_modules/
-__pycache__/
+# --- Python & Django ---
+backend/venv/
+backend/__pycache__/
+**/__pycache__/
+*.pyc
+db.sqlite3
 *.sqlite3
+
+# --- Node.js & React (Frontend) ---
+frontend/node_modules/
+frontend/dist/
+frontend/.vite/
+
+# --- Variables de Entorno y Credenciales ---
 .env
+backend/.env
+
+# --- Sistema operativo y Editores ---
 .DS_Store
+Thumbs.db
+.vscode/
+.idea/
