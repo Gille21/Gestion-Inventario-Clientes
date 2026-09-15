@@ -7,11 +7,11 @@ class Command(BaseCommand):
     def handle(self, *args, **kwargs):
         # 1. Crear Productos
         productos = [
-            {"codigo": "OFI-001", "nombre": "Resma de Papel A4", "categoria": "Papelería", "precio": 18500, "stock_actual": 100},
-            {"codigo": "OFI-002", "nombre": "Marcadores Borrables (Caja x4)", "categoria": "Papelería", "precio": 12000, "stock_actual": 50},
-            {"codigo": "OFI-003", "nombre": "Silla Ergonómica Oficina", "categoria": "Mobiliario", "precio": 350000, "stock_actual": 15},
-            {"codigo": "OFI-004", "nombre": "Teclado Inalámbrico", "categoria": "Tecnología", "precio": 85000, "stock_actual": 25},
-            {"codigo": "OFI-005", "nombre": "Cuaderno Argollado 100 hojas", "categoria": "Papelería", "precio": 9000, "stock_actual": 200},
+            {"codigo": "OFI-001", "nombre": "Resma de Papel A4", "categoria": "Papelería", "precio": 18500, "stock": 100},
+            {"codigo": "OFI-002", "nombre": "Marcadores Borrables (Caja x4)", "categoria": "Papelería", "precio": 12000, "stock": 50},
+            {"codigo": "OFI-003", "nombre": "Silla Ergonómica Oficina", "categoria": "Mobiliario", "precio": 350000, "stock": 15},
+            {"codigo": "OFI-004", "nombre": "Teclado Inalámbrico", "categoria": "Tecnología", "precio": 85000, "stock": 25},
+            {"codigo": "OFI-005", "nombre": "Cuaderno Argollado 100 hojas", "categoria": "Papelería", "precio": 9000, "stock": 200},
         ]
         
         self.stdout.write("--- Registrando Productos ---")
