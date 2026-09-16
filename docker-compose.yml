@@ -1,15 +1,55 @@
+version: '3.8'
+
 services:
   db:
     image: mcr.microsoft.com/mssql/server:2022-latest
     container_name: corferias_sql_server
     environment:
       - ACCEPT_EULA=Y
-      - SA_PASSWORD=${SA_PASSWORD} 
+      - SA_PASSWORD=${SA_PASSWORD}
       - MSSQL_PID=Developer
     ports:
       - "1433:1433"
     volumes:
       - sqlserver_data:/var/opt/mssql
+    networks:
+      - corferias-net
+
+  backend:
+    build: ./backend
+    container_name: corferias_backend
+    # Comando inteligente: Espera 15s a que la DB arranque, migra, hace seed y arranca Django
+    command: >
+      sh -c "echo 'Esperando a SQL Server...' &&
+             sleep 15 &&
+             python manage.py migrate &&
+             python manage.py seed_db &&
+             python manage.py runserver 0.0.0.0:8000"
+    volumes:
+      - ./backend:/app
+    ports:
+      - "8000:8000"
+    environment:
+      - DB_HOST=db
+      - SA_PASSWORD=${SA_PASSWORD}
+    depends_on:
+      - db
+    networks:
+      - corferias-net
+
+  frontend:
+    build: ./frontend
+    container_name: corferias_frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    networks:
+      - corferias-net
 
 volumes:
   sqlserver_data:
+
+networks:
+  corferias-net:
+    driver: bridge
