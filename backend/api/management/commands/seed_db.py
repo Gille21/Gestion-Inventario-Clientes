@@ -1,9 +1,59 @@
 from django.core.management.base import BaseCommand
-from api.models import Producto, Cliente, Tienda
+from django.db import transaction
+
+from api.models import (
+    Cliente,
+    DetallePedido,
+    MovimientoInventario,
+    Pedido,
+    Producto,
+    Tienda,
+)
 from django.contrib.auth.models import User
 
 class Command(BaseCommand):
     help = 'Puebla la base de datos con artículos de oficina y clientes iniciales'
+
+    def crear_venta_demo(self, *, tienda, cliente, admin_user, productos, numero):
+        motivo = f'Seed demo venta {numero}'
+        if MovimientoInventario.objects.filter(motivo=motivo).exists():
+            self.stdout.write(self.style.WARNING(f'La venta demo {numero} ya existe.'))
+            return
+
+        with transaction.atomic():
+            pedido = Pedido.objects.create(tienda=tienda, cliente=cliente, total=0)
+            total = 0
+
+            for codigo, cantidad in productos:
+                producto = Producto.objects.select_for_update().get(codigo=codigo)
+                if producto.stock < cantidad:
+                    raise ValueError(
+                        f'Stock insuficiente para {producto.nombre}: '
+                        f'se requieren {cantidad} y hay {producto.stock}.'
+                    )
+
+                DetallePedido.objects.create(
+                    pedido=pedido,
+                    producto=producto,
+                    cantidad=cantidad,
+                    precio_unitario=producto.precio,
+                )
+
+                producto.stock -= cantidad
+                producto.save()
+                MovimientoInventario.objects.create(
+                    producto=producto,
+                    tipo_movimiento='SALIDA',
+                    cantidad=cantidad,
+                    motivo=motivo,
+                    usuario=admin_user,
+                )
+                total += producto.precio * cantidad
+
+            pedido.total = total
+            pedido.save(update_fields=['total'])
+
+        self.stdout.write(self.style.SUCCESS(f'Pedido demo #{pedido.id} creado.'))
 
     def handle(self, *args, **kwargs):
 
@@ -54,5 +104,29 @@ class Command(BaseCommand):
                 self.stdout.write(self.style.SUCCESS(f"Cliente creado: {c['nombre']}"))
             else:
                 self.stdout.write(self.style.WARNING(f"El cliente ya existe: {c['nombre']}"))
+
+        tienda = Tienda.objects.get(nombre='Pabellón Principal')
+        cliente1 = Cliente.objects.get(identificacion='900123456')
+        cliente2 = Cliente.objects.get(identificacion='901987654')
+        admin_user = User.objects.get(username='admin')
+
+        self.stdout.write("\n--- Generando Ventas de Prueba ---")
+        try:
+            self.crear_venta_demo(
+                tienda=tienda,
+                cliente=cliente1,
+                admin_user=admin_user,
+                productos=[('OFI-001', 10), ('OFI-002', 5)],
+                numero=1,
+            )
+            self.crear_venta_demo(
+                tienda=tienda,
+                cliente=cliente2,
+                admin_user=admin_user,
+                productos=[('OFI-003', 2), ('OFI-004', 3)],
+                numero=2,
+            )
+        except (Producto.DoesNotExist, ValueError) as error:
+            self.stdout.write(self.style.ERROR(f'No se generaron las ventas demo: {error}'))
         
         self.stdout.write(self.style.SUCCESS("\n¡Base de datos poblada exitosamente con productos y clientes!"))
