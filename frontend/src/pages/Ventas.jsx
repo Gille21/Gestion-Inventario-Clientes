@@ -228,7 +228,7 @@ const Ventas = () => {
                           <td className="text-end">${Number(item.precio_unitario).toLocaleString()}</td>
                           <td className="text-end fw-bold">${Number(item.subtotal).toLocaleString()}</td>
                           <td className="text-center pe-3">
-                            <button className="btn btn-sm btn-outline-danger rounded-circle" onClick={() => eliminarDelCarrito(item.producto_id)}>
+                            <button className="btn btn-sm btn-danger rounded-circle" onClick={() => eliminarDelCarrito(item.producto_id)}>
                               X
                             </button>
                           </td>

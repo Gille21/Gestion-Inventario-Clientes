@@ -142,7 +142,7 @@ const Clientes = () => {
                   </thead>
                   <tbody>
                     {clientes.length === 0 ? (
-                      <tr><td colSpan="5" className="text-center text-muted">No hay clientes registrados.</td></tr>
+                      <tr><td colSpan="6" className="text-center text-muted">No hay clientes registrados.</td></tr>
                     ) : (
                       clientes.map((cliente) => (
                         <tr key={cliente.id}>
@@ -152,8 +152,10 @@ const Clientes = () => {
                           <td>{cliente.telefono}</td>
                           <td>{new Date(cliente.fecha_registro).toLocaleDateString()}</td>
                           <td>
-                            <button className="btn btn-sm btn-outline-warning me-2" onClick={() => prepararEdicion(cliente)}>Editar</button>
-                            <button className="btn btn-sm btn-outline-danger" onClick={() => handleEliminar(cliente.id, cliente.nombre)}>Eliminar</button>
+                            <div className="client-actions">
+                              <button className="btn btn-sm btn-warning" onClick={() => prepararEdicion(cliente)}>Editar</button>
+                              <button className="btn btn-sm btn-danger" onClick={() => handleEliminar(cliente.id, cliente.nombre)}>Eliminar</button>
+                            </div>
                           </td>
                         </tr>
                       ))

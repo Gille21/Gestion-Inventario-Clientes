@@ -38,7 +38,7 @@ const Login = () => {
       <div className="card shadow-sm" style={{ width: '100%', maxWidth: '400px' }}>
         <div className="card-body p-5">
           <div className="text-center mb-4">
-            <h2 className="fw-bold text-primary">GESTOR DE INVENTARIO & CLIENTES</h2>
+            <h2 className="fw-bold text-primary">Corferias ERP</h2>
             <p className="text-muted">Ingresa tus credenciales para continuar</p>
           </div>
 

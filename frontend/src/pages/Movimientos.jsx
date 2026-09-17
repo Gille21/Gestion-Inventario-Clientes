@@ -63,7 +63,7 @@ const Movimientos = () => {
               <input type="date" name="fecha_fin" className="form-control" value={filtros.fecha_fin} onChange={handleFiltroChange} />
             </div>
             <div className="col-md-2">
-              <button className="btn btn-outline-secondary w-100" onClick={limpiarFiltros}>Limpiar</button>
+              <button className="btn btn-secondary w-100" onClick={limpiarFiltros}>Limpiar</button>
             </div>
           </div>
         </div>

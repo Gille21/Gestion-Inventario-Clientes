@@ -1,111 +1,123 @@
+/* Importar tipografía ejecutiva (Inter) */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
 :root {
-  --text: #6b6375;
-  --text-h: #08060d;
-  --bg: #fff;
-  --border: #e5e4e7;
-  --code-bg: #f4f3ec;
-  --accent: #aa3bff;
-  --accent-bg: rgba(170, 59, 255, 0.1);
-  --accent-border: rgba(170, 59, 255, 0.5);
-  --social-bg: rgba(244, 243, 236, 0.5);
-  --shadow:
-    rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
-
-  --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --mono: ui-monospace, Consolas, monospace;
-
-  font: 18px/145% var(--sans);
-  letter-spacing: 0.18px;
-  color-scheme: light dark;
-  color: var(--text);
-  background: var(--bg);
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-
-  @media (max-width: 1024px) {
-    font-size: 16px;
-  }
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --text: #9ca3af;
-    --text-h: #f3f4f6;
-    --bg: #16171d;
-    --border: #2e303a;
-    --code-bg: #1f2028;
-    --accent: #c084fc;
-    --accent-bg: rgba(192, 132, 252, 0.15);
-    --accent-border: rgba(192, 132, 252, 0.5);
-    --social-bg: rgba(47, 48, 58, 0.5);
-    --shadow:
-      rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
-  }
-
-  #social .button-icon {
-    filter: invert(1) brightness(2);
-  }
+  /* Paleta SAP Semántica */
+  --bs-primary: #0074E2;
+  --sap-dark: #00305D;
+  --bs-success: #178236;
+  --bs-danger: #D0000A;
+  --bs-warning: #C35500;
+  
+  /* Forzar la nueva tipografía en toda la app */
+  --bs-font-sans-serif: 'Inter', system-ui, -apple-system, sans-serif;
+  --bs-body-bg: #F4F5F7; /* Un gris un poco más cálido para evitar el "vacío" */
 }
 
 body {
-  margin: 0;
+  font-family: var(--bs-font-sans-serif);
+  background-color: var(--bs-body-bg);
+  color: #333333;
 }
 
-#root {
-  width: 1126px;
-  max-width: 100%;
-  margin: 0 auto;
-  text-align: center;
-  border-inline: 1px solid var(--border);
-  min-height: 100svh;
-  display: flex;
-  flex-direction: column;
-  box-sizing: border-box;
+/* =========================================
+   DISEÑO DE BOTONES (SÓLIDOS Y ELEGANTES)
+========================================= */
+.btn {
+  border: none !important; /* Quitamos el borde por defecto */
+  border-radius: 4px !important;
+  font-weight: 600 !important;
+  text-transform: uppercase;
+  font-size: 0.75rem !important;
+  letter-spacing: 0.5px;
+  padding: 0.6rem 1.2rem !important;
+  transition: all 0.2s ease-in-out;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.08); /* Sombra sutil para dar volumen */
 }
 
-h1,
-h2 {
-  font-family: var(--heading);
+/* Efecto al pasar el mouse (se levantan un poco) */
+.btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+.btn-primary { background-color: var(--bs-primary) !important; color: white !important; }
+.btn-success { background-color: var(--bs-success) !important; color: white !important; }
+.btn-danger { background-color: var(--bs-danger) !important; color: white !important; }
+.btn-warning { background-color: var(--bs-warning) !important; color: white !important; }
+
+/* =========================================
+   TARJETAS Y TABLAS CON PESO VISUAL
+========================================= */
+.card {
+  border: none !important;
+  border-radius: 6px !important;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05) !important; /* Elimina la sensación de vacío */
+}
+
+.table thead {
+  background-color: var(--sap-dark) !important;
+  color: #FFFFFF !important;
+}
+
+.table thead th {
   font-weight: 500;
-  color: var(--text-h);
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  letter-spacing: 0.5px;
+  border: none !important;
+  padding: 1rem !important;
 }
 
-h1 {
-  font-size: 56px;
-  letter-spacing: -1.68px;
-  margin: 32px 0;
-  @media (max-width: 1024px) {
-    font-size: 36px;
-    margin: 20px 0;
-  }
-}
-h2 {
-  font-size: 24px;
-  line-height: 118%;
-  letter-spacing: -0.24px;
-  margin: 0 0 8px;
-  @media (max-width: 1024px) {
-    font-size: 20px;
-  }
-}
-p {
-  margin: 0;
+/* NAVBAR EJECUTIVO */
+.navbar {
+  background-color: #00305D !important; /* Azul muy oscuro SAP */
+  padding: 0.8rem 2rem;
 }
 
-code,
-.counter {
-  font-family: var(--mono);
-  display: inline-flex;
-  border-radius: 4px;
-  color: var(--text-h);
+.navbar .nav-link {
+  color: #A0B2C6 !important; /* Gris azulado para links inactivos */
+  font-weight: 500;
+  margin: 0 0.5rem;
+  transition: color 0.2s ease;
 }
 
-code {
-  font-size: 15px;
-  line-height: 135%;
-  padding: 4px 8px;
-  background: var(--code-bg);
+/* Quitar colores raros al link activo y dejarlo blanco y limpio */
+.navbar .nav-link.active, .navbar .nav-link:hover {
+  color: #FFFFFF !important; 
+}
+
+.navbar .navbar-brand {
+  color: #FFFFFF !important;
+}
+
+/* ENLACE DASHBOARD DESTACADO */
+.nav-btn-dashboard {
+  background-color: transparent !important;
+  color: #FFFFFF !important;
+  border: 0 !important;
+  border-bottom: 2px solid #3F92FF !important;
+  border-radius: 0 !important;
+  padding: 0.5rem 1.2rem !important;
+  font-weight: 600;
+  box-shadow: none !important;
+  transform: none !important;
+}
+.nav-btn-dashboard:hover {
+  background-color: rgba(63, 146, 255, 0.12) !important;
+  box-shadow: none !important;
+  transform: none !important;
+}
+.nav-btn-dashboard:focus,
+.nav-btn-dashboard:active {
+  color: #FFFFFF !important;
+  background-color: rgba(63, 146, 255, 0.12) !important;
+  box-shadow: none !important;
+}
+
+.client-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
 }

@@ -7,6 +7,7 @@ import Ventas from './pages/Ventas';
 import Historial from './pages/Historial';
 import Dashboard from './pages/Dashboard';
 import Movimientos from './pages/Movimientos';
+import "./index.css";
 
 // Un pequeño componente envoltorio para decidir si mostrar o no el Navbar
 const Layout = ({ children }) => {
